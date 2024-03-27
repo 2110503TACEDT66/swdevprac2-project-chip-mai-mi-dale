@@ -20,7 +20,7 @@ import { AppDispatch } from "@/redux/store";
 
 const fetch = require('node-fetch');
 
-export default function RegisterForm({onDateChange} : {onDateChange:Function}) {
+export default function ReservationForm({onDateChange} : {onDateChange:Function}) {
     const [room, setRoom] = useState<string | null>(null);
     const [date, setDate] = useState<Dayjs | null>(null);
     const [startTime, setStart] = useState<Dayjs | null>(null);
@@ -43,7 +43,7 @@ export default function RegisterForm({onDateChange} : {onDateChange:Function}) {
             dispatch(addReservation(item))
             //alert('this works')
         }
-    } 
+    }
 
     const handleSubmit = async () => {
         //e.preventDefault();
@@ -81,47 +81,70 @@ export default function RegisterForm({onDateChange} : {onDateChange:Function}) {
     };
 
     return (
-        <div className="grid place-items-center h-screen">
-            <div className="shadow-lg p-5 rounded-lg border-t-4 border-green-400">
-                <h1 className="text-xl font-bold my-4">Booking</h1>
-
+        // <div className="grid place-items-center h-screen">
+            <div className="grid grid-cols-1 gap-y-5 shadow-lg p-5 rounded-lg border-t-4 border-green-400">
+                <h1 className="text-xl font-bold my-4 text-black">Booking</h1>
+                
                 <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td className="text-left px-7 py-3">
+                        <label className="text-black" htmlFor="room">Room: </label></td>
+                        <td className="py-3">
+                        <FormControl fullWidth>
+                            <InputLabel id="room">Room</InputLabel>
+                            <Select
+                                labelId="room"
+                                id="room"
+                                value={room}
+                                label="RoomId"
+                                onChange={(e) => { setRoom(e.target.value)} }
+                            >
+                                {/* <MenuItem value={roomId}>Room1</MenuItem> */}
+                            </Select>
+                        </FormControl>
+
+                        </td>
+                        </tr>
+                        <tr>
+                            <td className="text-left px-7 py-3"><label className="text-black" htmlFor="reserveDate">Booking Date: </label></td>
+                            <td className="py-3">
+                        <FormControl fullWidth>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <InputLabel id="reserveDate"></InputLabel>
+                            <DatePicker 
+                                // inputProps={{
+                                //     placeholder: Booking Date
+                                // }}
+                                className='bg-white'
+                                labelId="reserveDate"
+                                value={date}
+                                onChange={(value) => { setDate(value); onDateChange(value) }} />
+                            </LocalizationProvider>
+                        </FormControl></td>
+                        </tr>
+                        <tr>
+                            <td className="text-left px-7 py-3"><label className="text-black" htmlFor="startTime">Start Time: </label></td>
+                            <td className="py-3">
                     <FormControl fullWidth>
-                        <InputLabel id="room">Room</InputLabel>
-                        <Select
-                            labelId="room"
-                            id="room"
-                            value={room}
-                            label="RoomId"
-                            onChange={(e) => { setRoom(e.target.value)} }
-                        >
-                            <MenuItem value={roomId}>Room1</MenuItem>
-                        </Select>
-
-                        <br />
-
+                        <InputLabel id="startTime"></InputLabel>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-
-                        <InputLabel id="bookDate">Booking Date</InputLabel>
-                        <DatePicker 
-                            className='bg-white'
-                            labelId="bookDate"
-                            value={date}
-                            onChange={(value) => { setDate(value); onDateChange(value) }} />
-
-                        <br />
-
-                        <InputLabel id="startTime">Start Time</InputLabel>
                         <TimePicker 
                             className="bg-white"
                             labelId="startTime"
                             value={startTime}
                             onChange={(value) => { setStart(value)}}>   
                         </TimePicker>
-
-                        <br />
-
-                        <InputLabel id="endTime">End Time</InputLabel>
+                        </LocalizationProvider>
+                    </FormControl></td>
+                        </tr>
+                        <tr>
+                            <td className="text-left px-7 py-3"><label className="text-black" htmlFor="endTime">End Time: </label></td>
+                            <td className="py-3">
+                    <FormControl fullWidth>
+                        <InputLabel id="endTime"></InputLabel>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <TimePicker 
                             className="bg-white"
                             labelId="endTime"
@@ -129,24 +152,38 @@ export default function RegisterForm({onDateChange} : {onDateChange:Function}) {
                             onChange={(value) => { setEnd(value)}}>   
                         </TimePicker>
                         </LocalizationProvider>
+                    </FormControl></td>
+                        </tr>
+                        <tr>
 
-                        <br />
+                            <td className="text-left px-7 py-3"><label className="text-black" htmlFor="peoplenum">Number of People: </label></td>
+                            <td className="py-3">
 
-                        <TextField id="peoplenum" label="Number of People" variant="outlined" type="number"
+                    <FormControl fullWidth>
+                        <TextField id="peoplenum" label="" variant="outlined" type="number"
                             value={people}
-                            onChange={(value)=>{ setPeople(value)}}/>
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setPeople(event.target.value)}}/>
+                    </FormControl></td>
+                        </tr>
+                    </tbody>
+                </table>
+                    
 
-                    </FormControl>
+
+                        
+
+
 
                     {/* <br /> */}
                     
-                    <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2"
+                    <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2 rounded-md"
                     onClick={makeBooking}>
                         Submit
                     </button>
 
                 </form>
             </div>
-        </div>
+        // </div>
     );
 }

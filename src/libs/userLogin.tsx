@@ -1,3 +1,5 @@
+import { error } from "console"
+
 export default async function userLogin(userEmail:string, userPassword:string) {
     const response = await fetch("http://localhost:5000/api/v1/auth/login", {
         method: "POST",
@@ -11,6 +13,7 @@ export default async function userLogin(userEmail:string, userPassword:string) {
     })
 
     if(!response.ok) {
+        console.log(response.statusText)
         throw new Error("Failed to Log-in")
     }
 
