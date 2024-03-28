@@ -9,7 +9,7 @@ export default function ReservationCard(){
     const dispatch = useDispatch<AppDispatch>()
 
     return(
-        <div className='bg-white flex flex-row justify-center w-full'>
+        <div className='bg-white flex flex-row justify-center w-full bg-cover'>
         {
             coItems && coItems.map((reservationItem)=>(
                 <div className="font-bold [font-family:'Inter-Bold',Helvetica] text-black">
@@ -23,6 +23,9 @@ export default function ReservationCard(){
                     <div>Co-Working Space ID : {reservationItem.coId}</div>
                     <div>Room ID : {reservationItem.roomId}</div>
                     <div>Number of People : {reservationItem.peopleNum}</div>
+                    <div>Date : {reservationItem.bookDate}</div>
+                    <div>Starts from : {reservationItem.startTime}</div>
+                    <div>Until : {reservationItem.endTime}</div>
 
                     <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm"
                         name="remove" onClick={() => dispatch(removeReservation(reservationItem))}>

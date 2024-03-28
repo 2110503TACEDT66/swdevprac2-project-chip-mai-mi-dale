@@ -1,10 +1,11 @@
 import { ReservationItem } from "../../interfaces";
 
-export default async function createReservation(reservationItem: ReservationItem) {
+export default async function createReservation(reservationItem: ReservationItem, token: string) {
     const response = await fetch("http://localhost:5000/api/v1/auth/register", {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
             startdate: reservationItem.startTime,

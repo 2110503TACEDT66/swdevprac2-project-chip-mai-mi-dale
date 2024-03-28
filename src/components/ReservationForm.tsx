@@ -30,18 +30,18 @@ export default function ReservationForm({onDateChange} : {onDateChange:Function}
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>()
 
-    const makeBooking = () => {
+    const makeBooking = async () => {
 
         if (room && date && startTime && endTime && people) {
-            const item: ReservationItem = {
+            const item: ReservationItem = JSON.parse(JSON.stringify({
                 roomId: room,
                 bookDate: dayjs(date).format('YYYY/MM/DD'),
                 startTime: startTime,
                 endTime: endTime,
-                peopleNum: people 
-            }
+                peopleNum: people
+            }))
             dispatch(addReservation(item))
-            //alert('this works')
+            alert('this works')
         }
     }
 
@@ -81,8 +81,11 @@ export default function ReservationForm({onDateChange} : {onDateChange:Function}
     };
 
     return (
-        // <div className="grid place-items-center h-screen">
-            <div className="grid grid-cols-1 gap-y-5 shadow-lg p-5 rounded-lg border-t-4 border-green-400">
+
+        <div className="">
+            <div className="w-full h-full absolute backdrop-blur-lg backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(4px)_brightness(100%)]"></div>
+            <div className="w-full h-full relative">
+            <div className="z-10 grid grid-cols-1 gap-y-5 shadow-lg p-5 rounded-lg border-t-4 border-green-400">
                 <h1 className="text-xl font-bold my-4 text-black">Booking</h1>
                 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -101,7 +104,7 @@ export default function ReservationForm({onDateChange} : {onDateChange:Function}
                                 label="RoomId"
                                 onChange={(e) => { setRoom(e.target.value)} }
                             >
-                                {/* <MenuItem value={roomId}>Room1</MenuItem> */}
+                                <MenuItem value={10}>ten</MenuItem>
                             </Select>
                         </FormControl>
 
@@ -168,12 +171,6 @@ export default function ReservationForm({onDateChange} : {onDateChange:Function}
                         </tr>
                     </tbody>
                 </table>
-                    
-
-
-                        
-
-
 
                     {/* <br /> */}
                     
@@ -184,6 +181,7 @@ export default function ReservationForm({onDateChange} : {onDateChange:Function}
 
                 </form>
             </div>
-        // </div>
+        </div>
+        </div>
     );
 }

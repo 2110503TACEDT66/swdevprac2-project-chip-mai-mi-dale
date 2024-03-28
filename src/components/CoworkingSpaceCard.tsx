@@ -16,7 +16,7 @@ export default function CoworkingSpaceCard({cwName, imgSrc, cwOpen, cwClose, cwA
                 </div>
             }
  
-            <div className="text-left w-full h-[25%] px-10 my-10 leading-5">
+            <div className="text-left w-full h-[25%] px-10 my-10 leading-5 text-black">
                 <p className="text-xl font-semibold">{cwName}</p>
                 <p><span className="font-medium">Open Time:</span> {cwOpen}</p>
                 <p><span className="font-medium">Close Time:</span> {cwClose}</p>
@@ -25,7 +25,7 @@ export default function CoworkingSpaceCard({cwName, imgSrc, cwOpen, cwClose, cwA
             </div>
 
             <div className="w-full h-[25%] flex justify-center items-center" onClick={(e) => { e.stopPropagation(); router.push(`/coworkingspaces/${cwId}`) }}>
-                <button className="px-4 py-2 border border-solid border-black rounded-lg"> See More Details</button>
+                <button className="px-4 py-2 border border-solid border-black rounded-lg text-black"> See More Details</button>
             </div>
         </div>
     )

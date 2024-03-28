@@ -7,7 +7,7 @@ import { Link } from "@mui/material";
 export default async function Topmenu () {
 
     const session = await getServerSession(authOptions)
-    console.log('token: ' + session?.user.token)
+    console.log('session: '+ session?.user.name)
 
     return (
         <div className="w-full h-[60px] px-10 fixed top-0 left-0 right-0 z-30 bg-[#fffdfb] border-b [border-bottom-style:solid] border-black flex flex-row justify-between items-center space-x-4">
@@ -17,7 +17,7 @@ export default async function Topmenu () {
                 <TopMenuItem title="Co-working Spaces" pageRef='/coworkingspaces'/>
                 <TopMenuItem title="My Bookings" pageRef='/mybookings'/>
                 {
-                    session? <TopMenuItem title={`Sign Out of ${session.user.name}`} pageRef="/api/auth/signout"/>
+                    session? <TopMenuItem title={`Sign Out of ${session.user?.name}`} pageRef="/api/auth/signout"/>
                     : <TopMenuItem title="Sign In" pageRef='/api/auth/signin'/>
                 }
 

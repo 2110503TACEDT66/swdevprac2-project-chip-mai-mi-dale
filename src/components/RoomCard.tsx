@@ -20,7 +20,7 @@ export default function RoomCard({ rId, imgSrc, rName, rCap }: { rName: string, 
                     </div>
                 }
             <div className="w-auto h-[20%] mt-5 p-2 flex justify-center items-center">
-                <button className="px-4 py-2 border border-solid border-black rounded-lg">Create Booking</button>
+                <button className="px-4 py-2 border border-solid border-black rounded-lg text-black">Create Booking</button>
             </div>
         </div>
     )
