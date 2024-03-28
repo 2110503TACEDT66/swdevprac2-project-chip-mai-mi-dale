@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function TopMenuItem ({ title, pageRef, imgSrc } : {title: string, pageRef: string, imgSrc?: string}) {
     return (
         <Link href={pageRef} className="text-center font-family:'Inter',Helvetica] font-normal text-black rounded-lg hover:text-amber-600">
-            <div className="px-5 py-2 flex flex-row items-center justify-center font-bold">
+            <div className="px-5 py-2 flex flex-row items-center justify-center font-semibold">
                 {title}
             {
                 imgSrc? <div className="mx-3">

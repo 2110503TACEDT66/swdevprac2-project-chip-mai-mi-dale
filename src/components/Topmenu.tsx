@@ -2,7 +2,7 @@ import TopMenuItem from "./TopMenuItem";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Link } from "@mui/material";
+import Link from "next/link";
 
 export default async function Topmenu () {
 

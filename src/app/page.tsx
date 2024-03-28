@@ -15,8 +15,6 @@ export default function Home() {
         <ProsCard imgSrc='/img/guarantee.png' description='Curate exceptional workspaces for your consideration'/>
         <ProsCard imgSrc='/img/house.png' description='Easily browse and compare different co-working spaces, granting you access to a wide range of options to suit your preferences and needs'/>
       </div>
-
-      <div className='bg-orange-950 absolute bottom-0 left-0 right-0 h-[25px] mt-[50px]'></div>
     </main>
   )
 }

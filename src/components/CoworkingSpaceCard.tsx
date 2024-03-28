@@ -24,8 +24,8 @@ export default function CoworkingSpaceCard({cwName, imgSrc, cwOpen, cwClose, cwA
                 <p><span className="font-medium">Tel:</span> {cwTel}</p>
             </div>
 
-            <div className="w-full h-[25%] flex justify-center items-center" onClick={(e) => { e.stopPropagation(); router.push(`/coworkingspaces/${cwId}`) }}>
-                <button className="px-4 py-2 border border-solid border-black rounded-lg text-black"> See More Details</button>
+            <div className="w-full h-[25%] flex justify-center items-center" onClick={(e) => { e.stopPropagation(); router.push(`/coworkingspaces/${cwId}/rooms`) }}>
+                <button className="px-4 py-2 border border-solid border-black rounded-lg text-black font-semibold hover:text-amber-600 hover:border-amber-600"> See More Details</button>
             </div>
         </div>
     )
