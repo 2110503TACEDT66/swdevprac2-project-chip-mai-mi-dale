@@ -1,4 +1,6 @@
-export default async function getRooms(coworkingSpaceId:string) {
+import { CoworkingSpaceItemJson } from "../../interfaces"
+
+export default async function getRooms(coworkingSpaceId:string):Promise<CoworkingSpaceItemJson> {
     console.log("CoId:" + coworkingSpaceId)
     const response = await fetch(`http://localhost:5000/api/v1/coworkingSpaces/${coworkingSpaceId}`, {
         method: 'GET',

@@ -1,7 +1,8 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { ReserveItemJson } from "../../interfaces";
 
-export default async function getReservation(id:string) {
+export default async function getReservation(id:string):Promise<ReserveItemJson> {
 
     const session = await getServerSession(authOptions);
 

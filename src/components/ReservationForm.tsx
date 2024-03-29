@@ -15,8 +15,6 @@ import { TimePicker } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
 import { ReservationItem } from "../../interfaces";
 import { useDispatch } from "react-redux";
-import { addReservation } from "@/redux/features/cartSlice";
-import { AppDispatch } from "@/redux/store";
 import { getServerSession } from "next-auth";
 import createReservation from "@/libs/createReservation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -27,6 +25,8 @@ import { useEffect } from "react";
 const fetch = require("node-fetch");
 
 export default function ReservationForm({cid, rid}: {cid:string, rid:string}) {
+
+    const [isSubmit, setIsSubmit] = useState(false)
 
     // const [room, setRoom] = useState<string>('');
     const [date, setDate] = useState<Dayjs | null>(null);
@@ -46,7 +46,8 @@ export default function ReservationForm({cid, rid}: {cid:string, rid:string}) {
     }
 
   const makeBooking = async () => {
-    
+    setIsSubmit(true);
+    try{
     if(startTime && endTime && date && people) {
         const itemJson = {
             bookDate: dayjs(date).format('YYYY/MM/DD'),
@@ -65,12 +66,23 @@ export default function ReservationForm({cid, rid}: {cid:string, rid:string}) {
             const res = await createReservation(itemJson, session.user.token);
             console.log('res test:', res)
             if (res.success) {
-                router.push("/mybookings")
+               await router.push("/mybookings")
             }
         }    
     }
     else {
         alert("Error creating reservation")
+    }
+
+    }
+    catch(err){
+        console.log(err)
+    }
+    finally {
+        setTimeout(()=>{
+            
+            setIsSubmit(false)
+        },5000)
     }
   }
 
@@ -119,7 +131,7 @@ export default function ReservationForm({cid, rid}: {cid:string, rid:string}) {
                 <div className=" grid grid-cols-1 gap-y-5 shadow-lg py-8 px-5 rounded-lg">
                     <h1 className="text-2xl font-bold my-4 text-black">Create Booking</h1>
                     
-                    <form action={makeBooking} className="flex flex-col gap-3">
+                    <form className="flex flex-col gap-3">
                     <table>
                         <tbody>
                             {/* <tr>
@@ -192,6 +204,8 @@ export default function ReservationForm({cid, rid}: {cid:string, rid:string}) {
                     </table>
 
                     <button type="submit"
+                    disabled={isSubmit}
+                    onClick={makeBooking}
                     className=" font-semibold bg-white text-amber-600 hover:text-white hover:bg-amber-600 font-bold cursor-pointer px-6 py-2 rounded-md">
                     Submit
                     </button>

@@ -1,7 +1,5 @@
 'use client'
-import { useAppSelector, AppDispatch} from '@/redux/store'
 import { useDispatch } from 'react-redux'
-import { removeReservation } from '@/redux/features/cartSlice'
 import { useEffect, useState, useRef } from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'

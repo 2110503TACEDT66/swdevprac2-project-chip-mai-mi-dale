@@ -11,7 +11,6 @@ export default async function userLogin(userEmail:string, userPassword:string) {
             password: userPassword
         }),
     })
-
     if(!response.ok) {
         console.log(response.statusText)
         throw new Error("Failed to Log-in")

@@ -13,33 +13,32 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import dayjs, { Dayjs } from "dayjs"
 import { TimePicker } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
-import { ReservationItem } from "../../interfaces";
 import { useDispatch } from "react-redux";
-import { addReservation } from "@/redux/features/cartSlice";
-import { AppDispatch } from "@/redux/store";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { useSession } from "next-auth/react";
 import editReservation from "@/libs/editReservation";
 import getReservation from "@/libs/getReservation";
 import { useEffect } from "react";
+import { ReservationItemGet, ReservationItem } from "../../interfaces";
 
 const fetch = require("node-fetch");
 
-export default function EditReservationForm({reserveid, reservationItem}:{reserveid:string, reservationItem:any}) {
-    console.log('edit reserv form' + reservationItem);
+export default function EditReservationForm({reserveid, reservationItem}:{reserveid:string, reservationItem:ReservationItemGet}) {
+    console.log('edit reserv form', reservationItem);
 
     // const [room, setRoom] = useState<string>('');
-    const [date, setDate] = useState<Dayjs | null>(reservationItem.bookDate);
-    const [startTime, setStart] = useState<Dayjs | null >(reservationItem.startTime);
-    const [endTime, setEnd] = useState<Dayjs | null >(reservationItem.endTime);
+    const [date, setDate] = useState<Dayjs | null>(dayjs(reservationItem.bookDate));
+    const [startTime, setStart] = useState<Dayjs | null >(dayjs(reservationItem.startTime));
+    const [endTime, setEnd] = useState<Dayjs | null >(dayjs(reservationItem.endTime));
     const [people, setPeople] = useState<number>(reservationItem.people);
 
+    console.log("People ",reservationItem.people);
 //   const urlParams = useSearchParams()
 //const cid = urlParams.get('id')
 //   const roomName = urlParams.get('name')
 
-const [reservResponse, setReservRes] = useState<ReservationItem>()
+// const [reservResponse, setReservRes] = useState<ReservationItem>()
 
 // useEffect(()=>{
 //     const fetchData = async () => {
@@ -52,23 +51,27 @@ const [reservResponse, setReservRes] = useState<ReservationItem>()
   const {data: session}= useSession()
   const router = useRouter()
   //const dispatch = useDispatch<AppDispatch>();
-    if(!reservResponse || !session?.user.token) {
+    // if(!reservResponse || !session?.user.token) {
+    //     return null
+    // }
+    if(!session?.user.token) {
         return null
     }
+
   const editBooking = async () => {
     if(startTime && endTime && date && people) {
-        const itemJson = {
+        const itemJson:ReservationItem = {
             bookDate: dayjs(date).format('YYYY/MM/DD'),
             startTime: dayjs(startTime).format('LT'),
             endTime: dayjs(endTime).format('LT'),
             people: people,
-            user: reservResponse.user,
-            room: reservResponse.room,
-            coworkingspace: reservResponse.coworkingspace
+            user: reservationItem.user._id,
+            room: reservationItem.room._id,
+            coworkingspace: reservationItem.coworkingspace._id
         }
 
         if(session.user.token){
-            const res = await editReservation(itemJson, session.user.token);
+            const res = await editReservation(itemJson, reserveid, session.user.token);
             console.log('res test:', res)
             if (res.success) {
                 router.push("/mybookings")

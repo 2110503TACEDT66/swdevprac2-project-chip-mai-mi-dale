@@ -2,15 +2,15 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ReservationItem } from "../../interfaces";
 
-export default async function editReservation(reservationItem:ReservationItem, id:string) {
+export default async function editReservation(reservationItem:ReservationItem, id:string, token:string) {
 
-    const session = await getServerSession(authOptions);
+    // const session = await getServerSession(authOptions);
 
     const response = await fetch(`http://localhost:5000/api/v1/reservations/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            authorization: `Bearer ${session?.user.token}`
+            authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
             bookDate: reservationItem.bookDate,
