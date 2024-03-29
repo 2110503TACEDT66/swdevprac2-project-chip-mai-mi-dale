@@ -17,7 +17,7 @@ export default async function CoworkingSpace() {
                 <p className="[font-family:'Inter',Helvetica] font-normal text-white text-[24px] text-center">
                     Empower your workday: Choose your ideal co-working space with ease.
                 </p>
-                <Suspense fallback={ <p>Loading ... <LinearProgress/></p> }>
+                <Suspense fallback={<p>Loading ... <LinearProgress color="inherit"/></p> }>
                     <div className="w-full flex flex-col justify-center items-center">
                         <CoworkingSpaceCatalog cwJson={coworkingSpaces}/>
                     </div>

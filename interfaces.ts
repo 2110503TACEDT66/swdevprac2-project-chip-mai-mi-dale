@@ -1,23 +1,52 @@
 export interface ReservationItem {
-    // coId: string,
-    // coName: string,
-    // roomId: string,
-    // bookDate: string,
-    // startTime: string,
-    // endTime: string,
-    // peopleNum: number,
-    // user: string
-
-    //not sure mak mak helpp
-
     bookDate: string,
     startTime: string,
     endTime: string,
+    //ObjectId
     user: string,
+    //ObjectId
     room: string,
+    //ObjectId
     coworkingspace: string,
     people: number
 }
+
+  export interface ReservationJson {
+    success: boolean,
+    count: number,
+    data: ReservationItem[]
+  }
+
+  export interface CoworkingSpaceJson {
+    success: boolean,
+    count: number,
+    data: CoworkingSpaceItem[]
+  }
+
+  export interface CoworkingSpaceItem {
+    id:string,
+    name: string,
+    picture: string,
+    address: string,
+    tel: string,
+    opentime: string,
+    closetime: string,
+    roomcount: number,
+  }
+  
+  export interface RoomJson {
+    success: boolean,
+    count: number,
+    data: RoomItem[]
+  }
+
+  export interface RoomItem{
+    id:string,
+    name: string,
+    picture: string,
+    coworking: string,
+    capacity: number
+  }
 
 export interface RegisterJson {
     name: string,
@@ -43,32 +72,29 @@ export interface RegisterJson {
       __v: number,
     }
   }
+
+  export interface ReservationItemGet {
+    bookDate: string;
+    startTime: string;
+    endTime: string;
+    user: {
+        name: string;
+        _id: string;
+    };
+    room: {
+        id:string;
+        name: string;
+        _id: string;
+    };
+    coworkingspace: {
+        id:string;
+        name: string;
+        address: string;
+        tel: string;
+        _id: string;
+    };
+    people: number;
+    createdAt: Date;
+}
+
   
-  export interface ReservationJson {
-    success: boolean,
-    count: number,
-    data: ReservationItem[]
-  }
-
-  export interface CoworkingSpaceJson {
-    success: boolean,
-    count: number,
-    data: CoworkingSpaceItem[]
-  }
-
-  export interface CoworkingSpaceItem {
-    name: string,
-    picture: string,
-    address: string,
-    tel: string,
-    opentime: string,
-    closetime: string,
-    roomcount: number,
-  }
-
-  export interface Room{
-    name: string,
-    picture: string,
-    coworking: string,
-    capacity: number
-  }

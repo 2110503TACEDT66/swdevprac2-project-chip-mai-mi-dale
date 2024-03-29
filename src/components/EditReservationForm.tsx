@@ -18,51 +18,57 @@ import { useDispatch } from "react-redux";
 import { addReservation } from "@/redux/features/cartSlice";
 import { AppDispatch } from "@/redux/store";
 import { getServerSession } from "next-auth";
-import createReservation from "@/libs/createReservation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { useSession } from "next-auth/react";
-import getReservations from "@/libs/getReservations";
+import editReservation from "@/libs/editReservation";
+import getReservation from "@/libs/getReservation";
 import { useEffect } from "react";
 
 const fetch = require("node-fetch");
 
-export default function ReservationForm({cid, rid}: {cid:string, rid:string}) {
+export default function EditReservationForm({reserveid, reservationItem}:{reserveid:string, reservationItem:any}) {
+    console.log('edit reserv form' + reservationItem);
 
     // const [room, setRoom] = useState<string>('');
-    const [date, setDate] = useState<Dayjs | null>(null);
-    const [startTime, setStart] = useState<Dayjs | null >(null);
-    const [endTime, setEnd] = useState<Dayjs | null >(null);
-    const [people, setPeople] = useState<number>(0);
+    const [date, setDate] = useState<Dayjs | null>(reservationItem.bookDate);
+    const [startTime, setStart] = useState<Dayjs | null >(reservationItem.startTime);
+    const [endTime, setEnd] = useState<Dayjs | null >(reservationItem.endTime);
+    const [people, setPeople] = useState<number>(reservationItem.people);
 
 //   const urlParams = useSearchParams()
-  //const cid = urlParams.get('id')
+//const cid = urlParams.get('id')
 //   const roomName = urlParams.get('name')
+
+const [reservResponse, setReservRes] = useState<ReservationItem>()
+
+// useEffect(()=>{
+//     const fetchData = async () => {
+//         const reservation = await getReservation(reserveid)
+//         setReservRes(reservation)
+//     }
+//     fetchData()
+// },[])
 
   const {data: session}= useSession()
   const router = useRouter()
   //const dispatch = useDispatch<AppDispatch>();
-    if(!session) {
+    if(!reservResponse || !session?.user.token) {
         return null
     }
-
-  const makeBooking = async () => {
-    
+  const editBooking = async () => {
     if(startTime && endTime && date && people) {
         const itemJson = {
             bookDate: dayjs(date).format('YYYY/MM/DD'),
             startTime: dayjs(startTime).format('LT'),
             endTime: dayjs(endTime).format('LT'),
-            //ObjectId
-            user: session.user._id,
-            //ObjectId
-            room: rid,
-            //ObjectId
-            coworkingspace: cid,
-            people: people
+            people: people,
+            user: reservResponse.user,
+            room: reservResponse.room,
+            coworkingspace: reservResponse.coworkingspace
         }
 
         if(session.user.token){
-            const res = await createReservation(itemJson, session.user.token);
+            const res = await editReservation(itemJson, session.user.token);
             console.log('res test:', res)
             if (res.success) {
                 router.push("/mybookings")
@@ -70,46 +76,9 @@ export default function ReservationForm({cid, rid}: {cid:string, rid:string}) {
         }    
     }
     else {
-        alert("Error creating reservation")
+        alert("Please fill all Fields")
     }
   }
-
-//   const handleSubmit = async () => {
-//     //e.preventDefault();
-
-//     if (!room || !date || !startTime || !endTime || !people) {
-//       throw new Error();
-//     }
-
-//     try {
-//       const res = await fetch(
-//         `http://localhost:5000/api/v1/auth/coworkingspaces/${cid}`,
-//         {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({
-//             room,
-//             date,
-//             startTime,
-//             endTime,
-//             people,
-//           }),
-//         }
-//       );
-
-//       if (res.ok) {
-//         const form = e.target;
-//         form.reset();
-//         router.push("/");
-//       } else {
-//         console.log("Booking failed.");
-//       }
-//     } catch (error) {
-//       console.log("Error during booking: ", error);
-//     }
-//   };
 
     return (
 
@@ -119,7 +88,7 @@ export default function ReservationForm({cid, rid}: {cid:string, rid:string}) {
                 <div className=" grid grid-cols-1 gap-y-5 shadow-lg py-8 px-5 rounded-lg">
                     <h1 className="text-2xl font-bold my-4 text-black">Create Booking</h1>
                     
-                    <form action={makeBooking} className="flex flex-col gap-3">
+                    <form action={editBooking} className="flex flex-col gap-3">
                     <table>
                         <tbody>
                             {/* <tr>

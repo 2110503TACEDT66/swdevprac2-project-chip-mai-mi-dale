@@ -1,7 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { resolve } from "path"
-const fetch = require('node-fetch');
 
 export default async function getReservations() {
     //await new Promise((resolve)=>setTimeout(resolve,1000))
@@ -18,12 +17,10 @@ export default async function getReservations() {
     },
     cache: "no-cache"
     })
-    console.log('res: ', response)
     if(!response.ok){
         throw new Error("Failed to fetch Reservations")
     }
-
-    const body = await response.json()
+    let jsonData = response.json();
     
-    return body
+    return jsonData
 }

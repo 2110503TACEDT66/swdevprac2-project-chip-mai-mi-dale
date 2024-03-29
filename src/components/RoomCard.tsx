@@ -15,7 +15,7 @@ export default function RoomCard({ rId, imgSrc, rName, rCap, cwId }: { rName: st
                     <div className="absolute w-full h-full top-0 bg-gradient-to-b from-black/90 to-transparent rounded-lg"></div>
                     <div className="absolute w-full h-full py-5 pl-5 text-left flex flex-col justify-between items-start">
                         <p className="text-xl text-white font-semibold ">{rName}</p>
-                        <p className="text-md text-white font-medium">Capacity: {rCap} people</p>
+                            <p className="text-md text-white font-medium drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Capacity: {rCap} people</p>
                     </div>
                 </div>
                     
@@ -23,7 +23,7 @@ export default function RoomCard({ rId, imgSrc, rName, rCap, cwId }: { rName: st
                         <div className="absolute w-full h-full top-0 bg-gradient-to-b from-black/90 to-transparent rounded-lg"></div>
                         <div className="absolute w-full h-full py-5 pl-5 text-left flex flex-col justify-between items-start">
                             <p className="text-xl text-white font-semibold ">{rName}</p>
-                            <p className="text-md text-white font-medium">Capacity: {rCap} people</p>
+                            <p className="text-md text-white font-medium drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Capacity: {rCap} people</p>
                         </div>
                     </div>
                 }
