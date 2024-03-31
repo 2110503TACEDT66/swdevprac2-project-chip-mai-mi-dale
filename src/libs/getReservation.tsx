@@ -6,7 +6,7 @@ export default async function getReservation(id:string):Promise<ReserveItemJson>
 
     const session = await getServerSession(authOptions);
 
-    const response = await fetch(`http://localhost:5000/api/v1/reservations/${id}`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/reservations/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

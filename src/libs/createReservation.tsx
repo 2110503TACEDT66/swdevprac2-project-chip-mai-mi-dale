@@ -2,7 +2,7 @@ import { ReservationItem } from "../../interfaces";
 
 export default async function createReservation(reservationItem: ReservationItem, token: string) {
     try{
-        const response:Response = await fetch("http://localhost:5000/api/v1/reservations", {
+        const response:Response = await fetch(`${process.env.BACKEND_URL}/api/v1/reservations`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
